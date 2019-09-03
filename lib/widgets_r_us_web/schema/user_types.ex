@@ -23,7 +23,7 @@ defmodule WidgetsRUsWeb.Schema.UserTypes do
     @desc "Get a user"
     field :user, :user do
       arg :id, non_null(:id)
-      resolve &Resolvers.User.find_product/3
+      resolve &Resolvers.User.find_user/3
     end
   end
 
@@ -34,6 +34,21 @@ defmodule WidgetsRUsWeb.Schema.UserTypes do
       arg :email, non_null(:string)
 
       resolve &Resolvers.User.create_user/3
+    end
+
+    @desc "Update user"
+    field :update_user, type: :user do
+      arg :id, non_null(:id)
+      arg :user, :update_user_params
+
+      resolve &Resolvers.User.update_user/3
+    end
+
+    @desc "Delete user"
+    field :delete_user, type: :user do
+      arg :id, non_null(:id)
+
+      resolve &Resolvers.User.delete_user/3
     end
   end
 end
