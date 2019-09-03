@@ -13,7 +13,7 @@ defmodule WidgetsRUs.Accounts.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:name, :email, :password_hash])
-    |> validate_required([:name, :email, :password_hash])
+    |> cast(attrs, [:name, :email])
+    |> validate_required([:name, :email])
   end
 end

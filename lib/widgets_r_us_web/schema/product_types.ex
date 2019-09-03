@@ -16,7 +16,7 @@ defmodule WidgetsRUsWeb.Schema.ProductTypes do
     field :price, :float
   end
 
-  object :post_queries do
+  object :product_queries do
     @desc "Get all products"
     field :products, list_of(:product) do
       resolve &Resolvers.Product.list_all/3
@@ -29,7 +29,7 @@ defmodule WidgetsRUsWeb.Schema.ProductTypes do
     end
   end
 
-  object :post_mutations do
+  object :product_mutations do
     @desc "Create product"
     field :create_product, type: :product do
       arg :name, non_null(:string)
