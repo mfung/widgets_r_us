@@ -2,8 +2,10 @@ defmodule WidgetsRUs.Sales.Cart do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias WidgetsRUs.Accounts.User
+
   schema "carts" do
-    field :user_id, :id
+    belongs_to :user, User
 
     timestamps()
   end

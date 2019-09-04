@@ -43,7 +43,11 @@ defmodule WidgetsRUs.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:absinthe_plug, "~> 1.4"},
-      {:plug_cowboy, "~> 2.0"}
+      {:guardian, "~> 1.2"},
+      {:bcrypt_elixir, "~> 2.0"},
+      {:comeonin, "~> 5.1.2"},
+      {:plug_cowboy, "~> 2.0"},
+      {:dataloader, "~> 1.0"}
     ]
   end
 

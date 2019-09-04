@@ -2,9 +2,22 @@ defmodule WidgetsRUsWeb.Resolvers.User do
   alias WidgetsRUs.Accounts.User
   alias WidgetsRUs.Repo
   alias WidgetsRUsWeb.Helpers.Errors
+  alias WidgetsRUs.Helpers.Authentication
+
+  def login(%{email: email, password: password}, _info) do
+    with {:ok, user} <- Authentication.login_with_email_pass(email, password),
+         {:ok, jwt, _} <- WidgetsRUs.Guardian.encode_and_sign(user),
+         {:ok, _} <- WidgetsRUs.Accounts.store_token(user, jwt) do
+           {:ok, %{token: jwt}}
+         end
+  end
+
+  def list_all(_parent, _args, %{context: %{current_user: _current_user}}) do
+    { :ok, WidgetsRUs.Accounts.list_users() }
+  end
 
   def list_all(_parent, _args, _resolution) do
-    { :ok, WidgetsRUs.Accounts.list_users() }
+   {:error, "Not Authorized"}
   end
 
   def find_user(_parent, %{id: id}, _resolution) do

@@ -101,4 +101,10 @@ defmodule WidgetsRUs.Accounts do
   def change_user(%User{} = user) do
     User.changeset(user, %{})
   end
+
+  def store_token(%User{} = user, token) do
+    user
+    |> User.store_token_changeset(%{token: token})
+    |> Repo.update()
+  end
 end

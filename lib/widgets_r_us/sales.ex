@@ -1,4 +1,5 @@
 defmodule WidgetsRUs.Sales do
+  import Ecto.Changeset
   @moduledoc """
   The Sales context.
   """
@@ -17,8 +18,10 @@ defmodule WidgetsRUs.Sales do
       [%Cart{}, ...]
 
   """
-  def list_carts do
-    Repo.all(Cart)
+  def list_carts(current_user) do
+    current_user
+    |> Ecto.assoc(:cart)
+    |> Repo.all()
   end
 
   @doc """
@@ -49,9 +52,10 @@ defmodule WidgetsRUs.Sales do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_cart(attrs \\ %{}) do
+  def create_cart(attrs \\ %{}, current_user) do
     %Cart{}
     |> Cart.changeset(attrs)
+    |> put_assoc(:user, current_user)
     |> Repo.insert()
   end
 

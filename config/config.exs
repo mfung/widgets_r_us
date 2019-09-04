@@ -22,6 +22,16 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+config :widgets_r_us, WidgetsRUs.Guardian,
+  allowed_algos: ["HS512"],
+  verify_module: Guardian.JTW,
+  issuer: "widgets_r_us",
+  ttl: {30, :days},
+  allowed_drift: 2000,
+  verify_issuer: true,
+  secret_key: "PWZbvRykYgDXx1zyxbmFXSiqUf7u+PgN97333sHRt+dCNjXcqc6y3x/wEnAjprel",
+  serializer: WidgetsRUs.Guardian
+
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 

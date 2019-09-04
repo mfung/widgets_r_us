@@ -1,12 +1,21 @@
 defmodule WidgetsRUsWeb.Schema.UserTypes do
   use Absinthe.Schema.Notation
-  alias WidgetsRUsWeb.Resolvers
+  import Absinthe.Resolution.Helpers, only: [dataloader: 1]
+  alias WidgetsRUsWeb.{Data, Resolvers}
+
+  @desc "A session"
+  object :session do
+    field :email, :string
+    field :password, :string
+    field :token, :string
+  end
 
   @desc "A user"
   object :user do
     field :id, :id
     field :name, :string
     field :email, :string
+    field :cart, :cart, resolve: dataloader(Data)
   end
 
   input_object :update_user_params do
@@ -25,6 +34,14 @@ defmodule WidgetsRUsWeb.Schema.UserTypes do
       arg :id, non_null(:id)
       resolve &Resolvers.User.find_user/3
     end
+
+    @desc "Login user"
+    field :login, type: :session do
+      arg :email, non_null(:string)
+      arg :password, non_null(:string)
+
+      resolve &Resolvers.User.login/2
+    end
   end
 
   object :user_mutations do
@@ -32,6 +49,7 @@ defmodule WidgetsRUsWeb.Schema.UserTypes do
     field :create_user, type: :user do
       arg :name, non_null(:string)
       arg :email, non_null(:string)
+      arg :password, non_null(:string)
 
       resolve &Resolvers.User.create_user/3
     end

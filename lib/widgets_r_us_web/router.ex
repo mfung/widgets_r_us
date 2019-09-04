@@ -10,6 +10,7 @@ defmodule WidgetsRUsWeb.Router do
   end
 
   pipeline :api do
+    plug WidgetsRUs.Context
     plug :accepts, ["json"]
   end
 
