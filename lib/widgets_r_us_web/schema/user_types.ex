@@ -15,7 +15,8 @@ defmodule WidgetsRUsWeb.Schema.UserTypes do
     field :id, :id
     field :name, :string
     field :email, :string
-    field :cart, :cart, resolve: dataloader(Data)
+
+    field :cart, list_of(:cart), resolve: dataloader(Data)
   end
 
   input_object :update_user_params do
